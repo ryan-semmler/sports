@@ -14,6 +14,8 @@ def add_player(cur, ID, name, rush_atts, rush_yds, rush_tds, pass_comps, pass_yd
 def find_player(cur, name_input):
     cur.execute("SELECT * FROM data_table WHERE name = %s", (name_input,))
     results = cur.fetchone()
+    if not results:
+        return None
     print(name_input, '\n')
     print("Rushing attempts:", results[2])
     print("Rushing yards:", results[3])
@@ -24,6 +26,10 @@ def find_player(cur, name_input):
 
 
 def delete_player(cur, name_input):
+    cur.execute("SELECT * FROM data_table WHERE name = %s", (name_input,))
+    results = cur.fetchone()
+    if not results:
+        return None
     cur.execute("DELETE FROM data_table WHERE name = %s", (name_input,))
 
 
